@@ -44,13 +44,13 @@ namespace PropertySort {
         /// <returns></returns>
         public string ToCsv() {
 
-            var propertyNames = typeof(T).GetProperties().
+            var propertyNames = typeof(T).GetProperties()
                                           //SortAttribute属性が設定されているプロパティのみ対象
-                                          Where(e => Attribute.IsDefined(e, typeof(SortAttribute))).
+                                         .Where(e => Attribute.IsDefined(e, typeof(SortAttribute)))
                                           //SortAttribute属性のSortIndexプロパティでソート
-                                          OrderBy(e => ((SortAttribute)Attribute.GetCustomAttribute(e, typeof(SortAttribute))).SortIndex).
+                                         .OrderBy(e => ((SortAttribute)Attribute.GetCustomAttribute(e, typeof(SortAttribute))).SortIndex)
                                           //プロパティ名を取得
-                                          Select(e => e.Name);
+                                         .Select(e => e.Name);
 
             var result = new StringBuilder();
 
