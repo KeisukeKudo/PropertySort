@@ -63,7 +63,7 @@ namespace PropertySort {
                 result.AppendLine(string.Join(",", element));
             }
 
-            return result.ToString();
+            return result.ToString().TrimEnd('\r', '\n');
         }
     }
 
