@@ -44,22 +44,22 @@ namespace PropertySort {
         /// <returns></returns>
         public string ToCsv() {
 
-            var entityNames = typeof(T).GetProperties().
-                                        //SortAttribute属性が設定されているプロパティのみ対象
-                                        Where(e => Attribute.IsDefined(e, typeof(SortAttribute))).
-                                        //SortAttribute属性のSortIndexプロパティでソート
-                                        OrderBy(e => ((SortAttribute)Attribute.GetCustomAttribute(e, typeof(SortAttribute))).SortIndex).
-                                        //プロパティ名を取得
-                                        Select(e => e.Name);
+            var propertyNames = typeof(T).GetProperties().
+                                          //SortAttribute属性が設定されているプロパティのみ対象
+                                          Where(e => Attribute.IsDefined(e, typeof(SortAttribute))).
+                                          //SortAttribute属性のSortIndexプロパティでソート
+                                          OrderBy(e => ((SortAttribute)Attribute.GetCustomAttribute(e, typeof(SortAttribute))).SortIndex).
+                                          //プロパティ名を取得
+                                          Select(e => e.Name);
 
             var result = new StringBuilder();
 
             //ヘッダー出力
-            result.AppendLine(string.Join(",", entityNames));
+            result.AppendLine(string.Join(",", propertyNames));
 
             foreach (var entity in this.Entitys) {
                 //要素出力
-                var element = entityNames.Select(n => typeof(T).GetProperty(n).GetValue(entity));
+                var element = propertyNames.Select(n => typeof(T).GetProperty(n).GetValue(entity));
                 result.AppendLine(string.Join(",", element));
             }
 
